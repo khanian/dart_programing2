@@ -88,6 +88,34 @@ void main() {
     //rethrow;
   }
   print('위 에러로 안찍힘2');
+
+// async
+  todo(3);
+  todo(1);
+  todo(5);
+
+  todoStream().listen((event) { });
+}
+
+
+// async / await / Future : 1회만 응답 받는 경우
+Future<void> todo(int second) async {
+  await Future.delayed(Duration(seconds: second));
+  print('TODO DONE in $second seconds!');
+}
+
+// async* / yield / Stream : 지속적으로 응답 받는 경우
+Stream<int> todoStream() async* {
+  int counter = 0;
+  
+  while(counter <= 10) {
+    counter++;
+    await Future.delayed(Duration(seconds: 1));
+    print('TODO is Running $counter');
+    yield counter;
+  }
+
+  print('TODO is done');
 }
 
 int add(int num1, int num2) {
